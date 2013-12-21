@@ -42,6 +42,9 @@ int main ()
 	int align = 1;
 	for(int i = 0; i < BOARD_SIZE; i++)
 	{
+        //Set tile numbers
+        board[i].setNumber(i);
+        
 		//Manage alignment
 		if(i == 8 || i == 24 || i == 40 || i == 56)
 			align = 2;

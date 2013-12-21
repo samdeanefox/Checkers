@@ -5,6 +5,7 @@ Tile::Tile()
 	occupied = false;
 	red_or_black = true; //True if tile is red, false if tile is black
 	check = NULL;
+    tileNumber = 0;
 }
 
 void Tile::setChecker(Checker* c)
@@ -26,13 +27,29 @@ void Tile::makeEmpty()
 ostream& operator <<(ostream& out, const Tile& obj)
 {
 	if(obj.isOccupied() == false)
-		out << "[ ] ";
+    {
+        if(obj.getColor() == true)
+            out << "[ ] ";
+        else
+            out << "< > ";
+    }
+    
 	else
 	{
 		if((obj.check)->getColor() == true)
-			out << "[R] ";
+        {
+            if(obj.getColor() == true)
+                out << "[R] ";
+            else
+                out << "<R> ";
+        }
 		else
-			out << "[B] ";
+        {
+            if(obj.getColor() == true)
+                out << "[B] ";
+            else
+                out << "<B> ";
+        }
 	}
 	return out;
 }

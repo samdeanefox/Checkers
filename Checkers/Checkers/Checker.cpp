@@ -128,7 +128,7 @@ void Checker::jumped()
 
 size_t jump(int space)
 {
-	
+    return 0;
 }
 
 /*ostream& operator <<(ostream& out, const Checker& obj)
