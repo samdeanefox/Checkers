@@ -7,8 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2229943518653D0600CBB510 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2229943418653D0600CBB510 /* main.cpp */; };
 		2229943718653D0600CBB510 /* Checkers.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2229943618653D0600CBB510 /* Checkers.1 */; };
+		22D0FD3618653EE400C9D677 /* Checker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 22D0FD2F18653EE400C9D677 /* Checker.cpp */; };
+		22D0FD3718653EE400C9D677 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 22D0FD3118653EE400C9D677 /* main.cpp */; };
+		22D0FD3818653EE400C9D677 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 22D0FD3218653EE400C9D677 /* Player.cpp */; };
+		22D0FD3918653EE400C9D677 /* Tile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 22D0FD3418653EE400C9D677 /* Tile.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -26,9 +29,15 @@
 
 /* Begin PBXFileReference section */
 		2229943118653D0600CBB510 /* Checkers */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Checkers; sourceTree = BUILT_PRODUCTS_DIR; };
-		2229943418653D0600CBB510 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		2229943618653D0600CBB510 /* Checkers.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = Checkers.1; sourceTree = "<group>"; };
 		2229943D18653DD200CBB510 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		22D0FD2F18653EE400C9D677 /* Checker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Checker.cpp; sourceTree = "<group>"; };
+		22D0FD3018653EE400C9D677 /* Checker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Checker.h; sourceTree = "<group>"; };
+		22D0FD3118653EE400C9D677 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		22D0FD3218653EE400C9D677 /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
+		22D0FD3318653EE400C9D677 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
+		22D0FD3418653EE400C9D677 /* Tile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Tile.cpp; sourceTree = "<group>"; };
+		22D0FD3518653EE400C9D677 /* Tile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tile.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,7 +71,13 @@
 		2229943318653D0600CBB510 /* Checkers */ = {
 			isa = PBXGroup;
 			children = (
-				2229943418653D0600CBB510 /* main.cpp */,
+				22D0FD2F18653EE400C9D677 /* Checker.cpp */,
+				22D0FD3018653EE400C9D677 /* Checker.h */,
+				22D0FD3118653EE400C9D677 /* main.cpp */,
+				22D0FD3218653EE400C9D677 /* Player.cpp */,
+				22D0FD3318653EE400C9D677 /* Player.h */,
+				22D0FD3418653EE400C9D677 /* Tile.cpp */,
+				22D0FD3518653EE400C9D677 /* Tile.h */,
 				2229943618653D0600CBB510 /* Checkers.1 */,
 			);
 			path = Checkers;
@@ -119,7 +134,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2229943518653D0600CBB510 /* main.cpp in Sources */,
+				22D0FD3718653EE400C9D677 /* main.cpp in Sources */,
+				22D0FD3618653EE400C9D677 /* Checker.cpp in Sources */,
+				22D0FD3818653EE400C9D677 /* Player.cpp in Sources */,
+				22D0FD3918653EE400C9D677 /* Tile.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,6 +245,7 @@
 				2229943C18653D0600CBB510 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

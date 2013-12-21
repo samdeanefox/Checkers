@@ -1,18 +1,261 @@
-//
-//  main.cpp
-//  Checkers
-//
-//  Created by Sam Fox on 12/20/13.
-//  Copyright (c) 2013 Sam Fox. All rights reserved.
-//
+/*
+ [0]  [1]  [2]  [3]  [4]  [5]  [6]  [7]  Red(true, player 1) starts here
+ 
+ [8]  [9]  [10] [11] [12] [13] [14] [15] 
+ 
+ [16] [17] [18] [19] [20] [21] [22] [23] 
+ 
+ [24] [25] [26] [27] [28] [29] [30] [31] 
+ 
+ [32] [33] [34] [35] [36] [37] [38] [39] 
+ 
+ [40] [41] [42] [43] [44] [45] [46] [47] 
+ 
+ [48] [49] [50] [51] [52] [53] [54] [55] 
+ 
+ [56] [57] [58] [59] [60] [61] [62] [63] Black(false, player 0) starts here
+ */
 
+
+
+#include "Tile.h"
+#include "Player.h"
 #include <iostream>
+using namespace std;
 
-int main(int argc, const char * argv[])
+int main ()
 {
-
-    // insert code here...
-    std::cout << "Hello, World!\n";
+	string a;
+	cin >> a;
+	
+	//DECLARATIONS
+	Tile board[BOARD_SIZE]; //Board represented as an array of tiles
+	Player red; //Player 1
+	Player black; //Player 2
+	bool whoseTurn = true; //true is red, false is black
+	int from; //Stores user's menu selection
+	int to; //Stores user's menu selection
+	bool gameOver = false; //True when game ends
+	bool goAgain = false; //Used for input validation
+	
+	//INITIALIZE THE BOARD
+	int align = 1;
+	for(int i = 0; i < BOARD_SIZE; i++)
+	{
+		//Manage alignment
+		if(i == 8 || i == 24 || i == 40 || i == 56)
+			align = 2;
+		if(i == 0 || i == 16 || i == 32 || i == 48)
+			align = 1;
+		
+		//Set tile color
+		if(i % 2 == 0)
+		{
+			if(align == 1)
+				board[i].setColor(true);
+			else
+				board[i].setColor(false);
+		}
+		else
+		{
+			if(align == 1)
+				board[i].setColor(false);
+			else
+				board[i].setColor(true);
+		}
+		
+		//Add red checkers
+		if((i >= 0) && (i <= 23) && (board[i].getColor() == true))
+		{
+			board[i].setChecker(new Checker(true, i));
+			cout << "\n" << board[i].getChecker()->getColor() << " " << i;
+		}
+		
+		//Add black checkers
+		if((i >= 40) && (i <= 63) && (board[i].getColor() == true))
+		{
+			board[i].setChecker(new Checker(false, i));
+			cout << "\n" << board[i].getChecker()->getColor() << " " << i;
+		}
+	}
+	
+	//GAMEPLAY
+	do
+	{
+		//PRINT BOARD
+		cout << "\n\n\n0    ";
+		for(int i = 0; i < BOARD_SIZE; i++)
+		{
+			//To see pieces
+			cout << board[i];
+			
+			//To see numbers instead of pieces
+			/*cout << "[" << i << "] ";
+			if(i < 10)
+				cout << " ";*/
+			if(i% 8 == 7)
+			{
+				cout << "   " << i << "\n\n";
+				if(i != 63)
+				{
+					cout << i + 1 << "   ";
+					if(i == 7)
+						cout << " ";
+				}
+			}
+		}
+		
+		//GET INFO FROM USER
+		cout << "\nPlayer " << whoseTurn << ", your turn!";
+		do
+		{
+			//GET CHECKER
+			cout << "\nWhich piece?\n";
+			cin >> from;
+			if(from < 0 || from >= BOARD_SIZE || board[from].getChecker() == NULL || (board[from].getChecker())->getColor() != whoseTurn)
+			{	
+				cout << "\nInvalid space number\n";
+				goAgain = true;
+			}
+			//Red's turn, middle board, not king
+			else if(whoseTurn == true && from % 8 != 0 && from % 8 != 7 && (board[from].getChecker())->isKing() == false && board[from + 9].isOccupied() == true && board[from + 7].isOccupied() == true)
+			{
+				cout << "\nThis piece cannot be moved\n";
+				goAgain = true;
+			}
+			//Black's turn, middle board, not king
+			else if(whoseTurn == false && from % 8 != 0 && from % 8 != 7 && (board[from].getChecker())->isKing() == false && board[from - 9].isOccupied() == true && board[from - 7].isOccupied() == true)
+			{
+				cout << "\nThis piece cannot be moved\n";
+				goAgain = true;
+			}
+			//Red's turn, left edge, not king
+			else if(whoseTurn == true && from % 8 == 0 && (board[from].getChecker())->isKing() == false && board[from + 9].isOccupied() == true)
+			{
+				cout << "\nThis piece cannot be moved\n";
+				goAgain = true;
+			}
+			//Red's turn, right edge, not king
+			else if(whoseTurn == true && from % 8 == 7 && (board[from].getChecker())->isKing() == false && board[from + 7].isOccupied() == true)
+			{	
+				cout << "\nThis piece cannot be moved\n";
+				goAgain = true;
+			}
+			//Black's turn, left edge, not king
+			else if(whoseTurn == false && from % 8 == 0 && (board[from].getChecker())->isKing() == false && board[from - 7].isOccupied() == true)
+			{
+				cout << "\nThis piece cannot be moved\n";
+				goAgain = true;
+			}
+			//Black's turn, right edge, not king
+			else if(whoseTurn == false && from % 8 == 7 && (board[from].getChecker())->isKing() == false && board[from - 9].isOccupied() == true)
+			{
+				cout << "\nThis piece cannot be moved\n";
+				goAgain = true;
+			}
+			//Valid and moveable piece
+			else
+				goAgain = false;
+		}
+		while(goAgain == true);
+		
+		//GET DESTINATION TILE
+		do
+		{
+			cout << "\nTo which space?\n";
+			cin >> to;
+			if(to < 0 || to >= BOARD_SIZE)
+			{
+				cout << "\nInvalid space number\n";
+				goAgain = true;
+			}
+			//Red's turn, middle board, not king
+			else if(whoseTurn == true && from % 8 != 0 && from % 8 != 7 && (board[from].getChecker())->isKing() == false)
+			{
+				if(!(to == from + 9 || to == from + 7) || board[to].isOccupied() == true)
+				{
+					cout << "\nThe piece cannot be moved here\n";
+					goAgain = true;
+				}
+				else
+					goAgain = false;
+			}
+			//Black's turn, middle board, not king
+			else if(whoseTurn == false && from % 8 != 0 && from % 8 != 7 && (board[from].getChecker())->isKing() == false)
+			{
+				if(!(to == from - 9 || to == from - 7) || board[to].isOccupied())
+				{
+					cout << "\nThe piece cannot be moved here\n";
+					goAgain = true;
+				}
+				else
+					goAgain = false;
+			}
+			//Red's turn, left edge, not king
+			else if(whoseTurn == true && from % 8 == 0 && (board[from].getChecker())->isKing() == false)
+			{
+				if(to != from + 9 || board[to].isOccupied())
+				{
+					cout << "\nThe piece cannot be moved here\n";
+					goAgain = true;
+				}
+				else
+					goAgain = false;
+			}
+			//Red's turn, right edge, not king
+			else if(whoseTurn == true && from % 8 == 7 && (board[from].getChecker())->isKing() == false)
+			{
+				if(to != from + 7 || board[to].isOccupied())
+				{
+					cout << "\nThe piece cannot be moved here\n";
+					goAgain = true;
+				}
+				else
+					goAgain = false;
+			}
+			//Black's turn, left edge, not king
+			else if(whoseTurn == false && from % 8 == 0 && (board[from].getChecker())->isKing() == false)
+			{
+				if(to != from - 7 || board[to].isOccupied())
+				{
+					cout << "\nThe piece cannot be moved here\n";
+					goAgain = true;
+				}
+				else
+					goAgain = false;
+			}
+			//Black's turn, right edge, not king
+			else if(whoseTurn == false && from % 8 == 7 && (board[from].getChecker())->isKing() == false)
+			{
+				if(to != from - 9 || board[to].isOccupied())
+				{
+					cout << "\nThe piece cannot be moved here\n";
+					goAgain = true;
+				}
+				else
+					goAgain = false;
+			}
+		}
+		while(goAgain == true);
+		
+		//MOVE PIECE
+		//Tile
+		board[to].setChecker(board[from].getChecker());
+		board[from].makeEmpty();
+		//Checker
+		board[to].getChecker()->move(to);
+		
+		//SWITCH TO OTHER PLAYER
+		if(whoseTurn)
+			whoseTurn = false;
+		else
+			whoseTurn = true;
+		
+		//END GAME IF SOMEONE IS OUT OF PIECES
+		if(red.getPieces() == 0 || black.getPieces() == 0)
+			gameOver = true;
+	}
+	while(!gameOver);
+	
     return 0;
 }
-
