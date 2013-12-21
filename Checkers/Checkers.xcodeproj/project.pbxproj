@@ -28,6 +28,7 @@
 		2229943118653D0600CBB510 /* Checkers */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Checkers; sourceTree = BUILT_PRODUCTS_DIR; };
 		2229943418653D0600CBB510 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		2229943618653D0600CBB510 /* Checkers.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = Checkers.1; sourceTree = "<group>"; };
+		2229943D18653DD200CBB510 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +47,7 @@
 			children = (
 				2229943318653D0600CBB510 /* Checkers */,
 				2229943218653D0600CBB510 /* Products */,
+				2229943D18653DD200CBB510 /* README.md */,
 			);
 			sourceTree = "<group>";
 		};
