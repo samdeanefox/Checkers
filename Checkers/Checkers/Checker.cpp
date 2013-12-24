@@ -120,15 +120,10 @@ void Checker::move(size_t space)
 		location = space;
 }
 
-void Checker::jumped()
+void Checker::kill()
 {
 	dead = true;
 	location = BOARD_SIZE;
-}
-
-size_t jump(int space)
-{
-    return 0;
 }
 
 /*ostream& operator <<(ostream& out, const Checker& obj)

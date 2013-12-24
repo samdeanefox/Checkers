@@ -12,17 +12,17 @@ public:
 	int getPieces() {return piecesLeft;}
 	int getMoves() {return moves;}
 	int getKings() {return kings;}
-	int getDoubleJumps() {return doubleJumps;}
+	int getJumps() {return jumps;}
 	
 	//MODIFICATION FUNCTIONS
 	void losePiece() {piecesLeft--;}
 	void addMove() {moves++;}
 	void addKing() {kings++;}
-	void addDoubleJump() {doubleJumps++;}
+	void addJump() {jumps++;}
 	
 private:
 	int piecesLeft;
 	int moves;
 	int kings;
-	int doubleJumps;
+	int jumps;
 };

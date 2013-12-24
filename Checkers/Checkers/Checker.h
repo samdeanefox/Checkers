@@ -1,3 +1,6 @@
+#ifndef CHECKER_H
+#define CHECKER_H
+
 #include <cstdlib>
 #include <iostream>
 using namespace std;
@@ -19,7 +22,7 @@ public:
 	
 	//MODIFICATION FUNCTIONS
 	void move(size_t space); //Moves checker to space if space is valid
-	void jumped(); //Sets dead to true and location to BOARD_SIZE
+	void kill(); //Sets dead to true and location to BOARD_SIZE when checker is jumped
 	
 	//OVERLOADS
 //	friend ostream& operator <<(ostream& out, const Checker& obj); //Output operator
@@ -30,5 +33,4 @@ private:
 	bool king; //True if check has been kinged (affects movement of checker)
 	bool dead; //True if checker has died
 };
-
-size_t jump(int space); //Returns new checker location 
+#endif

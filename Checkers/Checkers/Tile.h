@@ -1,3 +1,6 @@
+#ifndef TILE_H
+#define TILE_H
+
 #include "Checker.h"
 #include <cstdlib>
 #include <iostream>
@@ -30,3 +33,4 @@ private:
     int tileNumber; //Number tile on the board
 	Checker* check;
 };
+#endif
