@@ -1,4 +1,19 @@
-/*              BOARD MAP
+
+
+
+
+
+/*  
+ 
+ TO DO:
+ -kinging
+ -Add a "go back" feature for if you change your mind in the middle of a move
+ -Double jumps
+ -triple jumps
+ 
+ 
+ 
+            BOARD MAP
  
  [0]  [1]  [2]  [3]  [4]  [5]  [6]  [7]  Red(true, player 1) starts here
  
