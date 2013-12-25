@@ -23,6 +23,7 @@ public:
 	//MODIFICATION FUNCTIONS
 	void move(size_t space); //Moves checker to space if space is valid
 	void kill(); //Sets dead to true and location to BOARD_SIZE when checker is jumped
+    void setKing(bool k) {king = k;} //Sets king value
 	
 	//OVERLOADS
 //	friend ostream& operator <<(ostream& out, const Checker& obj); //Output operator
