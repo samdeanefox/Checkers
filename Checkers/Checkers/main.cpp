@@ -7,17 +7,16 @@
  
  TO DO:
  -kinging
- -Add a "go back" feature for if you change your mind in the middle of a move
  -Double jumps
  -triple jumps
  
  
  
-            BOARD MAP
+                BOARD MAP
  
- [0]  [1]  [2]  [3]  [4]  [5]  [6]  [7]  Red(true, player 1) starts here
+ [0 ] [1 ] [2 ] [3 ] [4 ] [5 ] [6 ] [7 ]  Red(true, player 1) starts here
  
- [8]  [9]  [10] [11] [12] [13] [14] [15] 
+ [8 ] [9 ] [10] [11] [12] [13] [14] [15]
  
  [16] [17] [18] [19] [20] [21] [22] [23] 
  
@@ -51,10 +50,11 @@ int main ()
 	int to; //Stores user's menu selection
 	bool gameOver = false; //True when game ends
 	bool goAgain = false; //Used for input validation
+    bool goBack = false; //Used when a player wants to re-do a move
     int userSelection = 0; //For user to select menu items
     int jumpChecker1 = 0; //To mark a jumped checker
-    int jumpChecker2 = 0; //To mark a jumped checker
-    int jumpChecker3 = 0; //To mark a jumped checker
+  //  int jumpChecker2 = 0; //To mark a jumped checker (double jump)
+  //  int jumpChecker3 = 0; //To mark a jumped checker (triple jump)
 	
 	//INITIALIZE THE BOARD
 	int align = 1;
@@ -129,439 +129,488 @@ int main ()
 		//GET INFO FROM USER
 		cout << "\nPlayer " << whoseTurn << ", your turn!";
         
-        //GET WHETHER IT IS A JUMP OR REGULAR MOVE
         do
         {
-            cout << "\nEnter 0 to move, 1 for a single jump, 2 for a double jump, or 3 for a triple jump\n";
-            cin >> userSelection;
-            if(userSelection != 0 && userSelection != 1 && userSelection != 2 && userSelection != 3)
-                cout << "\nEnter 0, 1, 2, or 3\n";
-        }
-        while (userSelection != 0 && userSelection != 1 && userSelection != 2 && userSelection != 3);
-        
-        //GET CHECKER
-		do
-		{
-			cout << "\nWhich piece?\n";
-			cin >> from;
-			if(from < 0 || from >= BOARD_SIZE || board[from].getChecker() == NULL || (board[from].getChecker())->getColor() != whoseTurn)
-			{	
-				cout << "\nInvalid space number\n";
-				goAgain = true;
-			}
-            
-            //VALIDATE IF PIECE CAN BE MOVED
-            //REGULAR MOVE
-            else if(userSelection == 0)
-            {
-                //Red's turn, middle board, not king
-                if(whoseTurn == true && from % 8 != 0 && from % 8 != 7 && (board[from].getChecker())->isKing() == false && board[from + 9].isOccupied() == true && board[from + 7].isOccupied() == true)
-                {
-                    cout << "\nThis piece cannot be moved\n";
-                    goAgain = true;
-                }
-                //Black's turn, middle board, not king
-                else if(whoseTurn == false && from % 8 != 0 && from % 8 != 7 && (board[from].getChecker())->isKing() == false && board[from - 9].isOccupied() == true && board[from - 7].isOccupied() == true)
-                {
-                    cout << "\nThis piece cannot be moved\n";
-                    goAgain = true;
-                }
-                //Red's turn, left edge, not king
-                else if(whoseTurn == true && from % 8 == 0 && (board[from].getChecker())->isKing() == false && board[from + 9].isOccupied() == true)
-                {
-                    cout << "\nThis piece cannot be moved\n";
-                    goAgain = true;
-                }
-                //Red's turn, right edge, not king
-                else if(whoseTurn == true && from % 8 == 7 && (board[from].getChecker())->isKing() == false && board[from + 7].isOccupied() == true)
-                {
-                    cout << "\nThis piece cannot be moved\n";
-                    goAgain = true;
-                }
-                //Black's turn, left edge, not king
-                else if(whoseTurn == false && from % 8 == 0 && (board[from].getChecker())->isKing() == false && board[from - 7].isOccupied() == true)
-                {
-                    cout << "\nThis piece cannot be moved\n";
-                    goAgain = true;
-                }
-                //Black's turn, right edge, not king
-                else if(whoseTurn == false && from % 8 == 7 && (board[from].getChecker())->isKing() == false && board[from - 9].isOccupied() == true)
-                {
-                    cout << "\nThis piece cannot be moved\n";
-                    goAgain = true;
-                }
-                //Valid piece
-                else
-                    goAgain = false;
-            }
-            //SINGLE JUMP
-            else if(userSelection == 1)
-            {
-                //Red's turn
-                if(whoseTurn == true)
-                {
-                    //Far enough from edge that there are possible jumps in either direction
-                    if(from % 8 != 7 && from % 8 != 6 && from % 8 != 0 && from % 8 != 1)
-                    {
-                        if(board[from + 14].isOccupied() == true && board[from + 18].isOccupied() == true)
-                        {
-                            cout << "\nNo jump can be made by this checker\n";
-                            goAgain = true;
-                        }
-                        else if(board[from + 14].isOccupied() == false && (board[from + 7].getChecker() == NULL || board[from + 7].getChecker()->getColor() == whoseTurn))
-                        {
-                            cout << "\nNo jump can be made by this checker\n";
-                            goAgain = true;
-                        }
-                        else if(board[from + 18].isOccupied() == false && (board[from + 9].getChecker() == NULL || board[from + 9].getChecker()->getColor() == whoseTurn))
-                        {
-                            cout << "\nNo jump can be made by this checker\n";
-                            goAgain = true;
-                        }
-                        else
-                            goAgain = false;
-                    }
-                    //Only a left jump is possible
-                    else if(from % 8 == 7 || from % 8 == 6)
-                    {
-                        if(board[from + 14].isOccupied() == true)
-                        {
-                            cout << "\nNo jump can be made by this checker\n";
-                            goAgain = true;
-                        }
-                        else if(board[from + 14].isOccupied() == false && (board[from + 7].getChecker() == NULL || board[from + 7].getChecker()->getColor() == whoseTurn))
-                        {
-                            cout << "\nNo jump can be made by this checker\n";
-                            goAgain = true;
-                        }
-                        else
-                            goAgain = false;
-                    }
-                    //Only a right jump is possible
-                    else if(from % 8 == 0 || from % 8 == 1)
-                    {
-                        if(board[from + 18].isOccupied() == true)
-                        {
-                            cout << "\nNo jump can be made by this checker\n";
-                            goAgain = true;
-                        }
-                        else if(board[from + 18].isOccupied() == false && (board[from + 9].getChecker() == NULL || board[from + 9].getChecker()->getColor() == whoseTurn))
-                        {
-                            cout << "\nNo jump can be made by this checker\n";
-                            goAgain = true;
-                        }
-                        else
-                            goAgain = false;
-                    }
-                }
-                
-                //Black's turn
-                if(whoseTurn == false)
-                {
-                    //Far enough from edge that there are possible jumps in either direction
-                    if(from % 8 != 7 && from % 8 != 6 && from % 8 != 0 && from % 8 != 1)
-                    {
-                        if(board[from - 14].isOccupied() == true && board[from - 18].isOccupied() == true)
-                        {
-                            cout << "\nNo jump can be made by this checker\n";
-                            goAgain = true;
-                        }
-                        else if(board[from - 14].isOccupied() == false && (board[from - 7].getChecker() == NULL || board[from - 7].getChecker()->getColor() == whoseTurn))
-                        {
-                            cout << "\nNo jump can be made by this checker\n";
-                            goAgain = true;
-                        }
-                        else if(board[from - 18].isOccupied() == false && (board[from - 9].getChecker() == NULL || board[from - 9].getChecker()->getColor() == whoseTurn))
-                        {
-                            cout << "\nNo jump can be made by this checker\n";
-                            goAgain = true;
-                        }
-                        else
-                            goAgain = false;
-                    }
-                    //Only a right jump is possible
-                    else if(from % 8 == 7 || from % 8 == 6)
-                    {
-                        if(board[from - 14].isOccupied() == true)
-                        {
-                            cout << "\nNo jump can be made by this checker\n";
-                            goAgain = true;
-                        }
-                        else if(board[from - 14].isOccupied() == false && (board[from - 7].getChecker() == NULL || board[from - 7].getChecker()->getColor() == whoseTurn))
-                        {
-                            cout << "\nNo jump can be made by this checker\n";
-                            goAgain = true;
-                        }
-                        else
-                            goAgain = false;
-                    }
-                    //Only a left jump is possible
-                    else if(from % 8 == 0 || from % 8 == 1)
-                    {
-                        if(board[from - 18].isOccupied() == true)
-                        {
-                            cout << "\nNo jump can be made by this checker\n";
-                            goAgain = true;
-                        }
-                        else if(board[from - 18].isOccupied() == false && (board[from - 9].getChecker() == NULL || board[from - 9].getChecker()->getColor() == whoseTurn))
-                        {
-                            cout << "\nNo jump can be made by this checker\n";
-                            goAgain = true;
-                        }
-                        else
-                            goAgain = false;
-                    }
-                }
-            }
-            else
-                goAgain = false;
-		}
-		while(goAgain == true);
-        
-		//REGULAR MOVE
-        if(userSelection == 0)
-        {
+            //GET WHETHER IT IS A JUMP OR REGULAR MOVE
             do
             {
-                cout << "\nTo which space?\n";
-                cin >> to;
-                if(to < 0 || to >= BOARD_SIZE)
+                cout << "\nEnter 0 to move, 1 for a single jump, 2 for a double jump, or 3 for a triple jump\n";
+                cin >> userSelection;
+                if(userSelection != 0 && userSelection != 1 && userSelection != 2 && userSelection != 3)
+                    cout << "\nEnter 0, 1, 2, or 3\n";
+            }
+            while (userSelection != 0 && userSelection != 1 && userSelection != 2 && userSelection != 3);
+        
+            //GET CHECKER
+            do
+            {
+                goBack = false;
+                cout << "\nWhich piece? (Enter -1 to go back)\n";
+                cin >> from;
+                if(from == -1)
                 {
+                    goBack = true;
+                    goAgain = false;
+                    userSelection = -1;
+                }
+                else if(from < 0 || from >= BOARD_SIZE || board[from].getChecker() == NULL || (board[from].getChecker())->getColor() != whoseTurn)
+                {
+                    goBack = false;
                     cout << "\nInvalid space number\n";
                     goAgain = true;
                 }
+            
+                //VALIDATE IF PIECE CAN BE MOVED
+                //REGULAR MOVE
+                else if(userSelection == 0)
+                {
+                    //Red's turn, middle board, not king
+                    if(whoseTurn == true && from % 8 != 0 && from % 8 != 7 && (board[from].getChecker())->isKing() == false && board[from + 9].isOccupied() == true && board[from + 7].isOccupied() == true)
+                    {
+                        cout << "\nThis piece cannot be moved\n";
+                        goAgain = true;
+                    }
+                    //Black's turn, middle board, not king
+                    else if(whoseTurn == false && from % 8 != 0 && from % 8 != 7 && (board[from].getChecker())->isKing() == false && board[from - 9].isOccupied() == true && board[from - 7].isOccupied() == true)
+                    {
+                        cout << "\nThis piece cannot be moved\n";
+                        goAgain = true;
+                    }
+                    //Red's turn, left edge, not king
+                    else if(whoseTurn == true && from % 8 == 0 && (board[from].getChecker())->isKing() == false && board[from + 9].isOccupied() == true)
+                    {
+                        cout << "\nThis piece cannot be moved\n";
+                        goAgain = true;
+                    }
+                    //Red's turn, right edge, not king
+                    else if(whoseTurn == true && from % 8 == 7 && (board[from].getChecker())->isKing() == false && board[from + 7].isOccupied() == true)
+                    {
+                        cout << "\nThis piece cannot be moved\n";
+                        goAgain = true;
+                    }
+                    //Black's turn, left edge, not king
+                    else if(whoseTurn == false && from % 8 == 0 && (board[from].getChecker())->isKing() == false && board[from - 7].isOccupied() == true)
+                    {
+                        cout << "\nThis piece cannot be moved\n";
+                        goAgain = true;
+                    }
+                    //Black's turn, right edge, not king
+                    else if(whoseTurn == false && from % 8 == 7 && (board[from].getChecker())->isKing() == false && board[from - 9].isOccupied() == true)
+                    {
+                        cout << "\nThis piece cannot be moved\n";
+                        goAgain = true;
+                    }
+                    //Valid piece
+                    else
+                    {
+                        goAgain = false;
+                    }
+                }
+                //SINGLE JUMP
+                else if(userSelection == 1)
+                {
+                    //Red's turn
+                    if(whoseTurn == true)
+                    {
+                        //Far enough from edge that there are possible jumps in either direction
+                        if(from % 8 != 7 && from % 8 != 6 && from % 8 != 0 && from % 8 != 1)
+                        {
+                            if(board[from + 14].isOccupied() == true && board[from + 18].isOccupied() == true)
+                            {
+                                cout << "\nNo jump can be made by this checker\n";
+                                goAgain = true;
+                            }
+                            else if(board[from + 14].isOccupied() == false && (board[from + 7].getChecker() == NULL || board[from + 7].getChecker()->getColor() == whoseTurn))
+                            {
+                                cout << "\nNo jump can be made by this checker\n";
+                                goAgain = true;
+                            }
+                            else if(board[from + 18].isOccupied() == false && (board[from + 9].getChecker() == NULL || board[from + 9].getChecker()->getColor() == whoseTurn))
+                            {
+                                cout << "\nNo jump can be made by this checker\n";
+                                goAgain = true;
+                            }
+                            else
+                                goAgain = false;
+                        }
+                        //Only a left jump is possible
+                        else if(from % 8 == 7 || from % 8 == 6)
+                        {
+                            if(board[from + 14].isOccupied() == true)
+                            {
+                                cout << "\nNo jump can be made by this checker\n";
+                                goAgain = true;
+                            }
+                            else if(board[from + 14].isOccupied() == false && (board[from + 7].getChecker() == NULL || board[from + 7].getChecker()->getColor() == whoseTurn))
+                            {
+                                cout << "\nNo jump can be made by this checker\n";
+                                goAgain = true;
+                            }
+                            else
+                                goAgain = false;
+                        }
+                        //Only a right jump is possible
+                        else if(from % 8 == 0 || from % 8 == 1)
+                        {
+                            if(board[from + 18].isOccupied() == true)
+                            {
+                                cout << "\nNo jump can be made by this checker\n";
+                                goAgain = true;
+                            }
+                            else if(board[from + 18].isOccupied() == false && (board[from + 9].getChecker() == NULL || board[from + 9].getChecker()->getColor() == whoseTurn))
+                            {
+                                cout << "\nNo jump can be made by this checker\n";
+                                goAgain = true;
+                            }
+                            else
+                            {
+                                goAgain = false;
+                            }
+                        }
+                    }
                 
-                //VALIDATE DESTINATION SPACE
-                //Red's turn, middle board, not king
-                else if(whoseTurn == true && from % 8 != 0 && from % 8 != 7 && (board[from].getChecker())->isKing() == false)
-                {
-                    if(!(to == from + 9 || to == from + 7) || board[to].isOccupied() == true)
+                    //Black's turn
+                    if(whoseTurn == false)
                     {
-                        cout << "\nThe piece cannot be moved here\n";
-                        goAgain = true;
+                        //Far enough from edge that there are possible jumps in either direction
+                        if(from % 8 != 7 && from % 8 != 6 && from % 8 != 0 && from % 8 != 1)
+                        {
+                            if(board[from - 14].isOccupied() == true && board[from - 18].isOccupied() == true)
+                            {
+                                cout << "\nNo jump can be made by this checker\n";
+                                goAgain = true;
+                            }
+                            else if(board[from - 14].isOccupied() == false && (board[from - 7].getChecker() == NULL || board[from - 7].getChecker()->getColor() == whoseTurn))
+                            {
+                                cout << "\nNo jump can be made by this checker\n";
+                                goAgain = true;
+                            }
+                            else if(board[from - 18].isOccupied() == false && (board[from - 9].getChecker() == NULL || board[from - 9].getChecker()->getColor() == whoseTurn))
+                            {
+                                cout << "\nNo jump can be made by this checker\n";
+                                goAgain = true;
+                            }
+                            else
+                                goAgain = false;
+                        }
+                        //Only a right jump is possible
+                        else if(from % 8 == 0 || from % 8 == 1)
+                        {
+                            if(board[from - 14].isOccupied() == true)
+                            {
+                                cout << "\nNo jump can be made by this checker\n";
+                                goAgain = true;
+                            }
+                            else if(board[from - 14].isOccupied() == false && (board[from - 7].getChecker() == NULL || board[from - 7].getChecker()->getColor() == whoseTurn))
+                            {
+                                cout << "\nNo jump can be made by this checker\n";
+                                goAgain = true;
+                            }
+                            else
+                                goAgain = false;
+                        }
+                        //Only a left jump is possible
+                        else if(from % 8 == 6 || from % 8 == 7)
+                        {
+                            if(board[from - 18].isOccupied() == true)
+                            {
+                                cout << "\nNo jump can be made by this checker\n";
+                                goAgain = true;
+                            }
+                            else if(board[from - 18].isOccupied() == false && (board[from - 9].getChecker() == NULL || board[from - 9].getChecker()->getColor() == whoseTurn))
+                            {
+                                cout << "\nNo jump can be made by this checker\n";
+                                goAgain = true;
+                            }
+                            else
+                            {
+                                goAgain = false;
+                            }
+                        }
                     }
-                    else
-                        goAgain = false;
                 }
-                //Black's turn, middle board, not king
-                else if(whoseTurn == false && from % 8 != 0 && from % 8 != 7 && (board[from].getChecker())->isKing() == false)
+                else
                 {
-                    if(!(to == from - 9 || to == from - 7) || board[to].isOccupied())
-                    {
-                        cout << "\nThe piece cannot be moved here\n";
-                        goAgain = true;
-                    }
-                    else
-                        goAgain = false;
-                }
-                //Red's turn, left edge, not king
-                else if(whoseTurn == true && from % 8 == 0 && (board[from].getChecker())->isKing() == false)
-                {
-                    if(to != from + 9 || board[to].isOccupied())
-                    {
-                        cout << "\nThe piece cannot be moved here\n";
-                        goAgain = true;
-                    }
-                    else
-                        goAgain = false;
-                }
-                //Red's turn, right edge, not king
-                else if(whoseTurn == true && from % 8 == 7 && (board[from].getChecker())->isKing() == false)
-                {
-                    if(to != from + 7 || board[to].isOccupied())
-                    {
-                        cout << "\nThe piece cannot be moved here\n";
-                        goAgain = true;
-                    }
-                    else
-                        goAgain = false;
-                }
-                //Black's turn, left edge, not king
-                else if(whoseTurn == false && from % 8 == 0 && (board[from].getChecker())->isKing() == false)
-                {
-                    if(to != from - 7 || board[to].isOccupied())
-                    {
-                        cout << "\nThe piece cannot be moved here\n";
-                        goAgain = true;
-                    }
-                    else
-                        goAgain = false;
-                }
-                //Black's turn, right edge, not king
-                else if(whoseTurn == false && from % 8 == 7 && (board[from].getChecker())->isKing() == false)
-                {
-                    if(to != from - 9 || board[to].isOccupied())
-                    {
-                        cout << "\nThe piece cannot be moved here\n";
-                        goAgain = true;
-                    }
-                    else
-                        goAgain = false;
+                    goAgain = false;
                 }
             }
             while(goAgain == true);
-            
-            //MOVE PIECE
-            //Tile
-            board[to].setChecker(board[from].getChecker());
-            board[from].makeEmpty();
-            //Checker
-            board[to].getChecker()->move(to);
-        }
         
-        //SINGLE JUMP
-        if(userSelection == 1)
-        {
-            do
+            //REGULAR MOVE
+            if(userSelection == 0)
             {
-                //If it is red's turn
-                if(whoseTurn == true)
+                do
                 {
-                    //Get the destination space
-                    cout << "\nOn which space will the checker land?\n";
+                    goBack = false;
+                    cout << "\nTo which space? (Enter -1 to go back)\n";
                     cin >> to;
-                    if(to < 0 || to >= BOARD_SIZE)
+                    if(to == -1)
+                    {
+                        goBack = true;
+                        goAgain = false;
+                        userSelection = -1;
+                    }
+                    else if(to < 0 || to >= BOARD_SIZE)
                     {
                         cout << "\nInvalid space number\n";
                         goAgain = true;
                     }
-                    //Make sure this is a proper move
-                    else if(!(to == from + 18 || to == from + 14) || board[to].isOccupied() == true)
-                    {
-                        cout << "\nThe piece cannot be moved here\n";
-                        goAgain = true;
-                    }
-                    //Mark the index of the (currently hypothetical) checker to be jumped
-                    else if (to == from + 18)
-                    {
-                        jumpChecker1 = from + 9;
-                        goAgain = false;
-                    }
-                    else if (to == from + 14)
-                    {
-                        jumpChecker1 = from + 7;
-                        goAgain = false;
-                    }
-                }
-                //If it is black's turn
-                if(whoseTurn == false)
-                {
-                    //Get the destination space
-                    cout << "\nOn which space will the checker land?\n";
-                    cin >> to;
-                    if(to < 0 || to >= BOARD_SIZE)
-                    {
-                        cout << "\nInvalid space number\n";
-                        goAgain = true;
-                    }
-                    
-                    //Make sure this is a proper move
-                    else if(!(to == from - 18 || to == from - 14) || board[to].isOccupied() == true)
-                    {
-                        cout << "\nThe piece cannot be moved here\n";
-                        goAgain = true;
-                    }
-                    
-                    //Mark the index of the (currently hypothetical) checker to be jumped
-                    else if (to == from - 18)
-                    {
-                        jumpChecker1 = from - 9;
-                        goAgain = false;
-                    }
-                    else if (to == from - 14)
-                    {
-                        jumpChecker1 = from - 7;
-                        goAgain = false;
-                    }
-                }
-            }
-            while(goAgain == true);
-            
-            do
-            {
-                //If it is red's turn
-                if(whoseTurn == true)
-                {
-                    //Make sure the checker is not trying to jump past an edge
-                    if((jumpChecker1 == from + 9 && jumpChecker1 % 8 == 7) || (jumpChecker1 == from + 7 && jumpChecker1 % 8 == 0))
-                    {
-                        cout << "\nThe piece cannot be moved here\n";
-                        goAgain = true;
-                    }
                 
-                    //Make sure the checker itself is not on an edge
-                    else if((from % 8 == 7 && to == from + 9) || (from % 8 == 0 && to == from + 7))
+                    //VALIDATE DESTINATION SPACE
+                    //Red's turn, middle board, not king
+                    else if(whoseTurn == true && from % 8 != 0 && from % 8 != 7 && (board[from].getChecker())->isKing() == false)
                     {
-                        cout << "\nThe piece cannot be moved here\n";
-                        goAgain = true;
+                        if(!(to == from + 9 || to == from + 7) || board[to].isOccupied() == true)
+                        {
+                            cout << "\nThe piece cannot be moved here\n";
+                            goAgain = true;
+                        }
+                        else
+                            goAgain = false;
                     }
-                    
-                    //Validate whether there is a checker to be jumped
-                    else if(board[jumpChecker1].isOccupied() == false || board[jumpChecker1].getChecker()->getColor() == whoseTurn)
+                    //Black's turn, middle board, not king
+                    else if(whoseTurn == false && from % 8 != 0 && from % 8 != 7 && (board[from].getChecker())->isKing() == false)
                     {
-                        cout << "\nNo piece can be jumped here\n";
-                        goAgain = true;
+                        if(!(to == from - 9 || to == from - 7) || board[to].isOccupied())
+                        {
+                            cout << "\nThe piece cannot be moved here\n";
+                            goAgain = true;
+                        }
+                        else
+                            goAgain = false;
                     }
-                    
-                    else
-                        goAgain = false;
+                    //Red's turn, left edge, not king
+                    else if(whoseTurn == true && from % 8 == 0 && (board[from].getChecker())->isKing() == false)
+                    {
+                        if(to != from + 9 || board[to].isOccupied())
+                        {
+                            cout << "\nThe piece cannot be moved here\n";
+                            goAgain = true;
+                        }
+                        else
+                            goAgain = false;
+                    }
+                    //Red's turn, right edge, not king
+                    else if(whoseTurn == true && from % 8 == 7 && (board[from].getChecker())->isKing() == false)
+                    {
+                        if(to != from + 7 || board[to].isOccupied())
+                        {
+                            cout << "\nThe piece cannot be moved here\n";
+                            goAgain = true;
+                        }
+                        else
+                            goAgain = false;
+                    }
+                    //Black's turn, left edge, not king
+                    else if(whoseTurn == false && from % 8 == 0 && (board[from].getChecker())->isKing() == false)
+                    {
+                        if(to != from - 7 || board[to].isOccupied())
+                        {
+                            cout << "\nThe piece cannot be moved here\n";
+                            goAgain = true;
+                        }
+                        else
+                            goAgain = false;
+                    }
+                    //Black's turn, right edge, not king
+                    else if(whoseTurn == false && from % 8 == 7 && (board[from].getChecker())->isKing() == false)
+                    {
+                        if(to != from - 9 || board[to].isOccupied())
+                        {
+                            cout << "\nThe piece cannot be moved here\n";
+                            goAgain = true;
+                        }
+                        else
+                        {
+                            goAgain = false;
+                        }
+                    }
                 }
-                //If it is black's turn
-                if(whoseTurn == false)
-                {
-                    //Make sure the checker is not trying to jump past an edge
-                    if((jumpChecker1 == from - 9 && jumpChecker1 % 8 == 0) || (jumpChecker1 == from - 7 && jumpChecker1 % 8 == 7))
-                    {
-                        cout << "\nThe piece cannot be moved here\n";
-                        goAgain = true;
-                    }
-                    
-                    //Make sure the checker itself is not on an edge
-                    else if((from % 8 == 0 && to == from - 9) || (from % 8 == 7 && to == from - 7))
-                    {
-                        cout << "\nThe piece cannot be moved here\n";
-                        goAgain = true;
-                    }
-                    
-                    //Validate whether there is a checker to be jumped
-                    else if(board[jumpChecker1].isOccupied() == false || board[jumpChecker1].getChecker()->getColor() == whoseTurn)
-                    {
-                        cout << "\nNo piece can be jumped here\n";
-                        goAgain = true;
-                    }
-                    
-                    else
-                        goAgain = false;
-                }
-            }
-            while (goAgain == true);
+                while(goAgain == true);
             
-            //MOVE PIECE
-            //Tile
-            board[to].setChecker(board[from].getChecker());
-            board[from].makeEmpty();
-            //Checker
-            board[to].getChecker()->move(to);
-            //Kill jumped chcker
-            board[jumpChecker1].getChecker()->kill();
-            board[jumpChecker1].makeEmpty();
-            //Tally player info
-            if(whoseTurn == true)
-            {
-                black.losePiece();
-                red.addJump();
+                //MOVE PIECE
+                //Tile
+                board[to].setChecker(board[from].getChecker());
+                board[from].makeEmpty();
+                //Checker
+                board[to].getChecker()->move(to);
             }
-            else
+        
+            //SINGLE JUMP
+            if(userSelection == 1)
             {
-                red.losePiece();
-                black.addJump();
+                do
+                {
+                    //If it is red's turn
+                    if(whoseTurn == true)
+                    {
+                        //Get the destination space
+                        goBack = false;
+                        cout << "\nOn which space will the checker land? (Enter -1 to go back)\n";
+                        cin >> to;
+                        if(to == -1)
+                        {
+                            goBack = true;
+                            goAgain = false;
+                            userSelection = -1;
+                        }
+                        else if(to < 0 || to >= BOARD_SIZE)
+                        {
+                            cout << "\nInvalid space number\n";
+                            goAgain = true;
+                        }
+                        //Make sure this is a proper move
+                        else if(!(to == from + 18 || to == from + 14) || board[to].isOccupied() == true)
+                        {
+                            cout << "\nThe piece cannot be moved here\n";
+                            goAgain = true;
+                        }
+                        //Mark the index of the (currently hypothetical) checker to be jumped
+                        else if (to == from + 18)
+                        {
+                            jumpChecker1 = from + 9;
+                            goAgain = false;
+                        }
+                        else if (to == from + 14)
+                        {
+                            jumpChecker1 = from + 7;
+                            goAgain = false;
+                        }
+                    }
+                    //If it is black's turn
+                    if(whoseTurn == false)
+                    {
+                        //Get the destination space
+                        goBack = false;
+                        cout << "\nOn which space will the checker land? (Enter -1 to go back)\n";
+                        cin >> to;
+                        if(to == -1)
+                        {
+                            goBack = true;
+                            goAgain = false;
+                            userSelection = -1;
+                        }
+                        else if(to < 0 || to >= BOARD_SIZE)
+                        {
+                            cout << "\nInvalid space number\n";
+                            goAgain = true;
+                        }
+                    
+                        //Make sure this is a proper move
+                        else if(!(to == from - 18 || to == from - 14) || board[to].isOccupied() == true)
+                        {
+                            cout << "\nThe piece cannot be moved here\n";
+                            goAgain = true;
+                        }
+                    
+                        //Mark the index of the (currently hypothetical) checker to be jumped
+                        else if (to == from - 18)
+                        {
+                            jumpChecker1 = from - 9;
+                            goAgain = false;
+                        }
+                        else if (to == from - 14)
+                        {
+                            jumpChecker1 = from - 7;
+                            goAgain = false;
+                        }
+                    }
+                }
+                while(goAgain == true);
+            
+                if(goBack == false)
+                {
+                    do
+                    {
+                        //If it is red's turn
+                        if(whoseTurn == true)
+                        {
+                            //Make sure the checker is not trying to jump past an edge
+                            if((jumpChecker1 == from + 9 && jumpChecker1 % 8 == 7) || (jumpChecker1 == from + 7 && jumpChecker1 % 8 == 0))
+                            {
+                                cout << "\nThe piece cannot be moved here\n";
+                                goAgain = true;
+                            }
+                
+                            //Make sure the checker itself is not on an edge
+                            else if((from % 8 == 7 && to == from + 9) || (from % 8 == 0 && to == from + 7))
+                            {
+                                cout << "\nThe piece cannot be moved here\n";
+                                goAgain = true;
+                            }
+                    
+                            //Validate whether there is a checker to be jumped
+                            else if(board[jumpChecker1].isOccupied() == false || board[jumpChecker1].getChecker()->getColor() == whoseTurn)
+                            {
+                                cout << "\nNo piece can be jumped here\n";
+                                goAgain = true;
+                            }
+                    
+                            else
+                                goAgain = false;
+                        }
+                        //If it is black's turn
+                        if(whoseTurn == false)
+                        {
+                            //Make sure the checker is not trying to jump past an edge
+                            if((jumpChecker1 == from - 9 && jumpChecker1 % 8 == 0) || (jumpChecker1 == from - 7 && jumpChecker1 % 8 == 7))
+                            {
+                                cout << "\nThe piece cannot be moved here\n";
+                                goAgain = true;
+                            }
+                    
+                            //Make sure the checker itself is not on an edge
+                            else if((from % 8 == 0 && to == from - 9) || (from % 8 == 7 && to == from - 7))
+                            {
+                                cout << "\nThe piece cannot be moved here\n";
+                                goAgain = true;
+                            }
+                    
+                            //Validate whether there is a checker to be jumped
+                            else if(board[jumpChecker1].isOccupied() == false || board[jumpChecker1].getChecker()->getColor() == whoseTurn)
+                            {
+                                cout << "\nNo piece can be jumped here\n";
+                                goAgain = true;
+                            }
+                    
+                            else
+                            {
+                                goAgain = false;
+                            }
+                        }
+                    }
+                    while (goAgain == true);
+                
+            
+                    //MOVE PIECE
+                    //Tile
+                    board[to].setChecker(board[from].getChecker());
+                    board[from].makeEmpty();
+                    //Checker
+                    board[to].getChecker()->move(to);
+                    //Kill jumped chcker
+                    board[jumpChecker1].getChecker()->kill();
+                    board[jumpChecker1].makeEmpty();
+                    //Tally player info
+                    if(whoseTurn == true)
+                    {
+                        black.losePiece();
+                        red.addJump();
+                    }
+                    else
+                    {
+                        red.losePiece();
+                        black.addJump();
+                    }
+                }
             }
-        }
         
-        //DOUBLE JUMP
+            //DOUBLE JUMP
         
-        //TRIPLE JUMP
-		
+            //TRIPLE JUMP
+		}
+        while(goBack == true);
+            
 		//TALLY THE MOVE
         if(whoseTurn == true)
             red.addMove();
