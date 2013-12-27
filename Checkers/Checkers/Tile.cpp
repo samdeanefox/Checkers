@@ -56,9 +56,19 @@ ostream& operator <<(ostream& out, const Tile& obj)
 		else
         {
             if(obj.getColor() == true)
-                out << "[B] ";
+            {
+                if((obj.check)->isKing())
+                    out << "[K] ";
+                else
+                    out << "[B] ";
+            }
             else
-                out << "<B> ";
+            {
+                if((obj.check)->isKing())
+                    out << "<K> ";
+                else
+                    out << "<B> ";
+            }
         }
 	}
 	return out;
