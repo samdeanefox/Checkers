@@ -6,6 +6,7 @@
 /*  
  
  TO DO:
+ -fix single jump validation bugs
  -Double jumps
  -triple jumps
  
