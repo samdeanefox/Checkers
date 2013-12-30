@@ -1,3 +1,55 @@
+/* Parse.com HOW TO
+ 
+ Parse.Object
+ 
+ Storing data on Parse is built around Parse.Object. Each Parse.Object contains key-value pairs of JSON-compatible data. This data is schemaless, which means that you don't need to specify ahead of time what keys exist on each Parse.Object. You simply set whatever key-value pairs you want, and our backend will store it.
+ 
+ For example, let's say you're tracking high scores for a game. A single Parse.Object could contain:
+ 
+ score: 1337, playerName: "Sean Plott", cheatMode: false
+ Keys must be alphanumeric strings. Values can be strings, numbers, booleans, or even arrays and dictionaries - anything that can be JSON-encoded.
+ 
+ Each Parse.Object is an instance of a specific subclass with a class name that you can use to distinguish different sorts of data. For example, we could call the high score object a GameScore. We recommend that you NameYourClassesLikeThis and nameYourKeysLikeThis, just to keep your code looking pretty.
+ 
+ To create a new subclass, use the Parse.Object.extend method. Any Parse.Query will return instances of the new class for any Parse.Object with the same classname. If you're familiar with Backbone.Model, then you already know how to use Parse.Object. It's designed to be a drop-in replacement.
+ 
+ // Simple syntax to create a new subclass of Parse.Object.
+ var GameScore = Parse.Object.extend("GameScore");
+ 
+ // Create a new instance of that class.
+ var gameScore = new GameScore();
+ 
+ // Alternatively, you can use the typical Backbone syntax.
+ var Achievement = Parse.Object.extend({
+ className: "Achievement"
+ });
+ You can add additional methods and properties to your subclasses of Parse.Object.
+ 
+ // A complex subclass of Parse.Object
+ var Monster = Parse.Object.extend("Monster", {
+ // Instance methods
+ hasSuperHumanStrength: function () {
+ return this.get("strength") > 18;
+ },
+ // Instance properties go in an initialize method
+ initialize: function (attrs, options) {
+ this.sound = "Rawr"
+ }
+ }, {
+ // Class methods
+ spawn: function(strength) {
+ var monster = new Monster();
+ monster.set("strength", strength);
+ return monster;
+ }
+ });
+ 
+ var monster = Monster.spawn(200);
+ alert(monster.strength());  // Displays 200.
+ alert(monster.sound); // Displays Rawr.
+ 
+ */
+
 // MUST USE TERMINAL COMMAND "git push https://pwblaine:Stcrzon88@github.com/samdeanefox/Checkers.git" TO PUSH, COMMIT LOCALLY VIA "Source Control > Commit..."
 
 // Javascript
