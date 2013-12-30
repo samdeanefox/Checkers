@@ -1,3 +1,5 @@
+// MUST USE TERMINAL COMMAND "git push https://pwblaine:Stcrzon88@github.com/samdeanefox/Checkers.git" TO PUSH, COMMIT LOCALLY VIA "Source Control > Commit..."
+
 // Javascript
 
 // LINK WITH PARSE.COM API KEYS
