@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11E02EFC18714E620055043D /* Checkers.js in Sources */ = {isa = PBXBuildFile; fileRef = 11E02EFB18714E620055043D /* Checkers.js */; };
 		2229943718653D0600CBB510 /* Checkers.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2229943618653D0600CBB510 /* Checkers.1 */; };
 		22D0FD3618653EE400C9D677 /* Checker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 22D0FD2F18653EE400C9D677 /* Checker.cpp */; };
 		22D0FD3718653EE400C9D677 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 22D0FD3118653EE400C9D677 /* main.cpp */; };
@@ -28,6 +29,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		11E02EFA18714DE50055043D /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+		11E02EFB18714E620055043D /* Checkers.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = Checkers.js; sourceTree = "<group>"; };
+		11E02EFD18714EE60055043D /* Player.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = Player.js; sourceTree = "<group>"; };
+		11E02EFE18714F550055043D /* Checker.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = Checker.js; sourceTree = "<group>"; };
+		11E02EFF187150100055043D /* Tile.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = Tile.js; sourceTree = "<group>"; };
 		2229943118653D0600CBB510 /* Checkers */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Checkers; sourceTree = BUILT_PRODUCTS_DIR; };
 		2229943618653D0600CBB510 /* Checkers.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = Checkers.1; sourceTree = "<group>"; };
 		2229943D18653DD200CBB510 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
@@ -51,9 +57,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		11E02EF918714DB00055043D /* CheckersJS */ = {
+			isa = PBXGroup;
+			children = (
+				11E02EFA18714DE50055043D /* index.html */,
+				11E02EFB18714E620055043D /* Checkers.js */,
+				11E02EFD18714EE60055043D /* Player.js */,
+				11E02EFE18714F550055043D /* Checker.js */,
+				11E02EFF187150100055043D /* Tile.js */,
+			);
+			name = CheckersJS;
+			sourceTree = "<group>";
+		};
 		2229942818653D0600CBB510 = {
 			isa = PBXGroup;
 			children = (
+				11E02EF918714DB00055043D /* CheckersJS */,
 				2229943318653D0600CBB510 /* Checkers */,
 				2229943218653D0600CBB510 /* Products */,
 				2229943D18653DD200CBB510 /* README.md */,
@@ -138,6 +157,7 @@
 				22D0FD3618653EE400C9D677 /* Checker.cpp in Sources */,
 				22D0FD3818653EE400C9D677 /* Player.cpp in Sources */,
 				22D0FD3918653EE400C9D677 /* Tile.cpp in Sources */,
+				11E02EFC18714E620055043D /* Checkers.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
