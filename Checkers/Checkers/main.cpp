@@ -6,7 +6,7 @@
 /*  
  
  TO DO:
- -fix single jump validation bugs
+ -fix single jump validation bugs, structure needs to be rethought
  -Double jumps
  -triple jumps
  
@@ -411,12 +411,22 @@ int main ()
                             //Far enough from edge that there are possible jumps in either direction
                             if(from % 8 != 7 && from % 8 != 6 && from % 8 != 0 && from % 8 != 1)
                             {
-                                if(board[from + 14].isOccupied() == true && board[from + 18].isOccupied() == true)
+                                if(board[from + 14].isOccupied() && board[from + 18].isOccupied())
                                 {
                                     cout << "\nNo jump can be made by this checker\n";
                                     goAgain = true;
                                 }
-                                else if((board[from + 9].getChecker() == NULL || board[from + 9].getChecker()->getColor() == whoseTurn) && (board[from + 7].getChecker() == NULL || board[from + 7].getChecker()->getColor() == whoseTurn))
+                                else if(board[from + 18].isOccupied() && !(board[from + 14].isOccupied()) && (board[from + 7].getChecker() == NULL || board[from + 7].getChecker()->getColor() == whoseTurn))
+                                {
+                                    cout << "\nNo jump can be made by this checker\n";
+                                    goAgain = true;
+                                }
+                                else if(board[from + 14].isOccupied() && !(board[from + 18].isOccupied()) && (board[from + 9].getChecker() == NULL || board[from + 9].getChecker()->getColor() == whoseTurn))
+                                {
+                                    cout << "\nNo jump can be made by this checker\n";
+                                    goAgain = true;
+                                }
+                                else if(!(board[from + 14].isOccupied() || board[from + 18].isOccupied()) && (board[from + 7].getChecker() == NULL || board[from + 7].getChecker()->getColor() == whoseTurn) && (board[from + 9].getChecker() == NULL || board[from + 9].getChecker()->getColor() == whoseTurn))
                                 {
                                     cout << "\nNo jump can be made by this checker\n";
                                     goAgain = true;
@@ -466,12 +476,22 @@ int main ()
                             //Far enough from edge that there are possible jumps in either direction
                             if(from % 8 != 7 && from % 8 != 6 && from % 8 != 0 && from % 8 != 1)
                             {
-                                if(board[from - 14].isOccupied() == true && board[from - 18].isOccupied() == true)
+                                if(board[from - 14].isOccupied() && board[from - 18].isOccupied())
                                 {
                                     cout << "\nNo jump can be made by this checker\n";
                                     goAgain = true;
                                 }
-                                else if((board[from - 9].getChecker() == NULL || board[from - 9].getChecker()->getColor() == whoseTurn) && (board[from - 7].getChecker() == NULL || board[from - 7].getChecker()->getColor() == whoseTurn))
+                                else if(board[from - 18].isOccupied() && !(board[from - 14].isOccupied()) && (board[from - 7].getChecker() == NULL || board[from - 7].getChecker()->getColor() == whoseTurn))
+                                {
+                                    cout << "\nNo jump can be made by this checker\n";
+                                    goAgain = true;
+                                }
+                                else if(board[from - 14].isOccupied() && !(board[from - 18].isOccupied()) && (board[from - 9].getChecker() == NULL || board[from - 9].getChecker()->getColor() == whoseTurn))
+                                {
+                                    cout << "\nNo jump can be made by this checker\n";
+                                    goAgain = true;
+                                }
+                                else if(!(board[from - 14].isOccupied() || board[from - 18].isOccupied()) && (board[from - 7].getChecker() == NULL || board[from - 7].getChecker()->getColor() == whoseTurn) && (board[from - 9].getChecker() == NULL || board[from - 9].getChecker()->getColor() == whoseTurn))
                                 {
                                     cout << "\nNo jump can be made by this checker\n";
                                     goAgain = true;
